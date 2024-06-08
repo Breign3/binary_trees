@@ -1,26 +1,34 @@
 #include "binary_trees.h"
 
 /**
- * array_to_bst - builds a binary search tree from an array
+ * binary_tree_is_leaf - checks if a node is a leaf
  *
- * @array: pointer to the first element of the array
- * @size: number of element in the array
- * Return: pointer to the root node of the BST
+ * @node: pointer to the node to check
+ * Return: 1 if node is a leaf, otherwise 0
  */
-bst_t *array_to_bst(int *array, size_t size)
+int binary_tree_is_leaf(const binary_tree_t *node)
 {
-	bst_t *tree;
-	size_t i;
+	int leaf = 0;
 
-	tree = NULL;
+	if (node && !(node->left) && !(node->right))
+		leaf = 1;
 
-	for (i = 0; i < size; i++)
-	{
-		bst_insert(&tree, array[i]);
-	}
+	return (leaf);
+}
 
-	if (i == size)
-		return (tree);
+/**
+ * binary_tree_leaves - counts the leaves in a binary tree
+ *
+ * @tree: tree root
+ * Return: number of leaves in a the tree or 0 if tree is NULL;
+ */
+size_t binary_tree_leaves(const binary_tree_t *tree)
+{
+	if (tree == NULL)
+		return (0);
 
-	return (NULL);
+	if (binary_tree_is_leaf(tree))
+		return (1);
+
+	return (binary_tree_leaves(tree->left) + binary_tree_leaves(tree->right));
 }
